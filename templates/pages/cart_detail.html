@@ -1,0 +1,112 @@
+{% extends 'master/master.html' %}
+{% block content %}
+{% if request.session.cart|length < 1 %}
+
+{% include 'pages\emptycart.html' %}
+
+{% else %}
+{% load cart_tag %}
+
+    <div class="container py-5 h-100">
+      {%if messages%} {% for message in messages %}
+  <div class="alert alert-sucess"style="background-color: #ffc107; color:#000000;">{{message}}</div>
+  {% endfor %} {% endif %}
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                      <h6 class="mb-0 text-muted"><span>{{request.session.cart|length}}</span> items</h6>
+                    </div>
+                    
+                    <hr class="my-4">
+                    {% for key,value in request.session.cart.items %}
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                       
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <img
+                          src="{{value.image}}" width="100" class="img-fluid rounded-3" alt="">
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-muted">{{ value.name }}</h6>
+                        <h6 class="text-black mb-0">{{ value.price }}</h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        <a class="btn btn-link px-2" href="{% url 'item_increment' value.product_id %}">
+                        <i class="fa fa-plus"></i>
+                        </a>
+
+                      <span id="form1" min="0" name="quantity" value=" " type="number"
+                        class="form-control form-control-sm" /> {{ value.quantity }}</span>
+
+                      <a class="btn btn-link px-2"
+                       href="{% url 'item_decrement' value.product_id %}">  
+                        <i class="fa fa-minus"></i>
+                      </a>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">Rs{{ value.price|multiply:value.quantity }}</h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <a href="{% url 'item_clear' value.product_id %}" class="text-muted"><i class="fa fa-times"></i></a>
+                      </div>
+                      <br>
+                      
+                    </div>
+                    {% endfor %}
+                    <hr class="my-4">
+                    <div class="pt-5">
+                      <a href="{% url 'cart_clear' %}" type="button" onclick="return confirm('are you sure?')" class="btn btn-dark btn-block btn-lg"
+                      data-mdb-ripple-color="dark">Clear Cart</a>
+                    </div>
+  
+                    <div class="pt-5">
+                            <a href="{% url 'products' %}" type="button" class="btn btn-dark btn-block btn-lg"
+                            data-mdb-ripple-color="dark">Back To Shop</a>
+                    </div>
+                
+                  </div>
+                </div>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase">items {{request.session.cart|length}}</h5>
+                      <h5>Rs {{cart_total_amount}}</h5>
+                    </div>
+  
+                    <h5 class="text-uppercase mb-3">Extra Charge</h5>
+  
+                    <div class="mb-4 pb-2">
+                        <h5 class = "text-uppercase">Shipping Charge Rs:100</h5>
+                        <h5 class = "text-uppercase">Tax Rs:100</h5>
+                        
+                    </div>
+  
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">Total price</h5>
+                      <h5>{{cart_total_amount|add:100|add:100}}</h5>
+                    </div>
+  
+                    <a href="{% url 'checkout' %}" type="button" class="btn btn-dark btn-block btn-lg"
+                      data-mdb-ripple-color="dark">Checkout</a>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+{% endif %}
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'master/master.html' %}
+{% block content %}
+<div class = "container">
+    {% if messages %}
+        {% for message in messages %}
+        <div class = "alert alert-sucess"style="background-color: #ffc107; color:#000000;">{{message}}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+<section class="product_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 text-center align-self-center">
+            
+                    <div class="img-box active">
+                        {% if productData.image %}
+                    <img src="{{ productData.image.url }}" alt="" class="img-fluid img-thumbnail">
+                    {% endif %}
+                    </div>
+                
+            </div>
+            <div class="col-sm-5 offset-sm-1"">
+                <br>
+                <br>
+                <h3>Name: {{ productData.name }}</h3>
+                <br>
+                <h2>Price Rs: {{productData.price}}</h2>
+                <h2>Available Stock: {{productData.stock}}</h2>
+                <h2>Description</h2>
+                <p>
+                    {{ productData.description |safe }}
+                </p>
+                <div class="btn-box d-flex justify-content-around">
+                    <a href="{% url 'cart_add' productData.id%}" class="btn1">Add To cart</a><br>
+                
+                    <a href=" {% url 'addwishlist' productData.id%}" class="btn1">Add To Wishlist</a><br>
+                 </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+   <!-- Similar product -->
+   <section class="product_section layout_padding">
+    <div class="container">
+       <div class="heading_container heading_center">
+          <h2>
+            More Products From This Category
+          </h2>
+       </div>
+       <div class="row">
+        {% for product in relateddata %}
+          <div class="col-sm-6 col-md-4 col-lg-4">
+             <div class="box">
+              
+                <div class="option_container">
+                   <div class="options">
+                      <a href="{% url 'cart_add' product.id %}" class="option1">
+                      Add to Cart
+                      </a>
+                      <a href="{% url 'product_details' product.slug %}" class="option2">
+                      Quick View
+                      </a>
+                   </div>
+                </div>
+                <div class="img-box">
+                   {% if product.image %}
+                   <img src="{{ product.image.url }}" alt="">
+                   {% endif %}
+                </div>
+                <div class="detail-box">
+                   <h5>
+                      {{product.name}}
+                   </h5>
+                   <h6>
+                        Rs: {{ product.price }}
+                   </h6>
+                </div>
+              
+             </div>
+          </div>
+          {% endfor %}
+    </div>          
+</section>
+{% endblock %}

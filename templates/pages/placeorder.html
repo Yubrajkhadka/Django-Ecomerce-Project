@@ -1,0 +1,100 @@
+{% extends 'master/master.html' %}
+{% block content %}
+{% load cart_tag %}
+{% load static %}
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script> 
+<div class="container">
+  <table id="cart" class="table table-hover table-condensed">
+    <thead>
+      <tr>
+        <th style="width:50%">Product</th>
+        <th style="width:10%">Price</th>
+        <th style="width:8%">Quantity</th>
+        <th style="width:22%" class="text-center">Total</th>
+        <th style="width:10%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for key,value in request.session.cart.items %}
+      <tr>
+        <td data-th="Product">
+          <div class="row">
+            <div class="col-sm-2 hidden-xs"><img src="{{value.image}}" width="100" /></div>
+            <div class="col-sm-10">
+                <br/>
+              <h4 class="nomargin">{{value.name}}</h4>
+              <p></p>
+            </div>
+          </div>
+        </td>
+        <td data-th="Price">Rs.{{value.price}}</td>
+        <td data-th="Quantity">
+          <input  class="form-control text-center" value="{{value.quantity}}">
+        </td>
+        <td data-th="Subtotal" class="text-center">Rs.{{ value.price|multiply:value.quantity }}</td>
+      </tr>
+      {% endfor %}
+    <tfoot>
+      <tr>
+       <td>
+        <button id="payment-button" class="btn btn-outline-success" name="amount"  value = {{cart_total_amount}}>Placeorder</button></td>
+        <td colspan="2" class="hidden-xs"></td>
+        </tr>
+    </tfoot>
+  </tbody>
+  </table>
+</div>
+
+ <script>
+     function verifyPayment(payload) {
+        $.ajax({
+            url: "{% url 'verify_payment' %}",
+            type: "POST",
+            data: payload,
+            dataType: 'json',
+            success: function (response) { alert(response) },
+            error: function (error) { alert(error.responseJSON['message']) }
+        });
+    } 
+    var config = {
+        "publicKey": "test_public_key_cffdbad73f3d459a9c774d2812d55e38",
+        "productIdentity": "o1 ",
+        "productName": "product.name",
+        "productUrl": "http://localhost:8000",
+        "paymentPreference": [
+            "KHALTI",
+            "EBANKING",
+            "MOBILE_BANKING",
+            "CONNECT_IPS",
+            "SCT",
+            ],
+        "eventHandler": {
+          onSuccess(payload) {
+              // hit merchant api for initiating verfication
+               console.log(payload);
+              verifyPayment(payload);
+              alert("Thanks. Payment Completed Successfully")
+              location.href = "/"
+
+          },
+          onError(error) {
+              console.log(error);
+          },
+          onClose() {
+              console.log('widget is closing');
+          }
+      }
+  };
+
+
+    var checkout = new KhaltiCheckout(config);
+    var btn = document.getElementById("payment-button");
+    btn.onclick = function () {
+        // minimum transaction amount must be 10, i.e 1000 in paisa.
+        checkout.show({amount: 1000});
+    }
+</script> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Paste this code anywhere in you body tag -->
+{% endblock %}

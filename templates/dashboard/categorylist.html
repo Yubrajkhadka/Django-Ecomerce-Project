@@ -1,0 +1,32 @@
+{% include 'dashboard/base.html'%}
+<br>
+<div class="container"> 
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style = "text-align:center">All Category list</h3><br>
+           <div>
+            <a href="{% url 'addcategory'%}" class="btn btn-primary ">Add New Category</a>
+           </div><br>
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Category Name</th>
+                        <th>slug</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in category %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{cat.name}}</td>
+                        <td>{{cat.slug}}</td>
+                        <td><a href="{% url 'delete_category' category_id=cat.id%}" type="button" onclick="return confirm('are you sure?')"<i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

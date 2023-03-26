@@ -1,0 +1,95 @@
+<footer>
+    {% load static %}
+    <div class="container">
+       <div class="row">
+          <div class="col-md-4">
+              <div class="full">
+                 <div class="logo_footer">
+                   <a href="{% url 'index'%}"><img width="210" src="{% static 'img/11.png'%}" alt="#" /></a>
+                 </div>
+                 <div class="information_f">
+                   <p><strong>ADDRESS:</strong> 28 Putalisadak, Kathmandu, Nepal</p>
+                   <p><strong>TELEPHONE:</strong> 9861562381</p>
+                   <p><strong>EMAIL:</strong>yubraj@kcc.edu.np</p>
+                 </div>
+              </div>
+          </div>
+          <div class="col-md-8">
+             <div class="row">
+             <div class="col-md-7">
+                <div class="row">
+                   <div class="col-md-6">
+                <div class="widget_menu">
+                   <h3>Menu</h3>
+                   <ul>
+                      <li><a href="{% url 'index'%}">Home</a></li>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">Services</a></li>
+                      <li><a href="{% url 'category'%}">Categories</a></li>
+                      <li><a href="{% url 'products'%}">Product</a></li>
+                      <li><a href="{% url 'contact'%}">Contact</a></li>
+                   </ul>
+                </div>
+             </div>
+             <div class="col-md-6">
+                <div class="widget_menu">
+                   <h3>Account</h3>
+                   <ul>
+                      <li><a href="{% url 'userprofile'%}">Account</a></li>
+                      <li><a href="{% url 'checkout'%}">Checkout</a></li>
+                      <li><a href="{% url 'loginpage'%}">Login</a></li>
+                      <li><a href="{% url 'register'%}">Register</a></li>
+                      <li><a href="{% url 'cart_detail'%}">Shopping</a></li>
+                      <li><a href="#">Widget</a></li>
+                   </ul>
+                </div>
+             </div>
+                </div>
+             </div>     
+             <div class="col-md-5">
+                <div class="widget_menu">
+                   <h3>Newsletter</h3>
+                   <div class="information_f">
+                     <p>Subscribe by our newsletter and get update protidin.</p>
+                   </div>
+                   <div class="form_sub">
+                      <form>
+                         <fieldset>
+                            <div class="field">
+                               <input type="email" placeholder="Enter Your Mail" name="email" />
+                               <input type="submit" value="Subscribe" />
+                            </div>
+                         </fieldset>
+                      </form>
+                   </div>
+                </div>
+             </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </footer>
+ <!-- footer end -->
+ <div class="cpy_">
+    <p>© 2023 All Rights Reserved By <a href="{% url 'index'%}">ArtandCollectibles</a></p>
+ </div>
+ <!-- jQery -->
+ {% load static %}
+ <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+ <!-- popper js -->
+ <script src="{% static 'js/popper.min.js'%}"></script>
+ <!-- bootstrap js -->
+ <script src="{% static 'js/bootstrap.js'%}"></script>
+ <!-- custom js -->
+ <script src="{% static 'js/custom.js'%}"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ <script>
+   $(document).ready(function() {
+      setTimeout(function() {
+          $('.alert-sucess').hide('slow')
+      }, 1500);
+  });
+ </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'master/master.html' %} {% block content %}
+<div class="container">
+    {%if messages%} {% for message in messages %}
+    <div class="alert alert-sucess" style="background-color: #ffc107; color:#000000;">{{message}}</div>
+    {% endfor %} {% endif %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="{% url 'category'%}">Category</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Category Details</li>
+      </ol>
+    </nav>
+
+    <section class="product_section layout_padding">
+        <div class="container">
+           <div class="heading_container heading_center">
+              <h2>
+                {{ categoryData.name }}
+              </h2>
+           </div>
+           <div class="row">
+            {% for product in categoryData.product_set.all %}
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                 <div class="box">
+                  
+                    <div class="option_container">
+                       <div class="options">
+                          <a href="{% url 'cart_add' product.id %}" class="option1">
+                          Add to Cart
+                          </a>
+                          <a href="{% url 'product_details' product.slug %}" class="option2">
+                          Quick View
+                          </a>
+                       </div>
+                    </div>
+                    <div class="img-box">
+                       {% if product.image %}
+                       <img src="{{ product.image.url }}" alt="">
+                       {% endif %}
+                    </div>
+                    <div class="detail-box">
+                       <h5>
+                          {{product.name}}
+                       </h5>
+                       <h6>
+                            Rs: {{ product.price }}
+                       </h6>
+                    </div>
+                  
+                 </div>
+              </div>
+              {% endfor %}
+        </div>
+
+<br/>
+{% endblock %}

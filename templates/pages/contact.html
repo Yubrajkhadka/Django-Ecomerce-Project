@@ -1,0 +1,51 @@
+{% extends 'master/master.html '%} {% block content %} {%if messages%} {% for message in messages %}
+<div class="alert alert-sucess" style="background-color: #ffc107; color:#000000;">{{message}}</div>
+{% endfor %} {% endif %}
+<section class="why_section layout_padding">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 vh-100 ">
+                <div class="full">
+                    <div class="card-header p-0">
+                        <div class="bg-primary text-white text-center py-2">
+                            <h3><i class="fa fa-envelope"></i> Write to us:</h3>
+                        </div>
+                    </div>
+                    <br/>
+                    <form action="" method="POST"> {% csrf_token %}
+                        <fieldset>
+
+                           {{form.fullname}} {{form.email}} {{form.number}} {{form.subject}}{{form.message}}{{form.captcha}}
+                            <input type="submit" value="Submit" />
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-6 vh-100 ">
+                <div class="mb-4">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.4372883010865!2d85.3209555145013!3d27.70378173225676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19a86d92de5f%3A0xd6a23381c4e35c7e!2sKantipur%20City%20College!5e0!3m2!1sen!2snp!4v1677404739361!5m2!1sen!2snp"
+                        width="800" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <!--Buttons-->
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <a class="bg-primary px-3 py-2 rounded text-white mb-2 d-inline-block"><i class="fa fa-map-marker"></i></a>
+                        <p> Putalisadak Kathmandu </p>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="tel:+977-9861562381" class="bg-primary px-3 py-2 rounded text-white mb-2 d-inline-block"><i class="fa fa-phone"></i></a>
+                        <p>+977-9861562381</p>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="bg-primary px-3 py-2 rounded text-white mb-2 d-inline-block"><i class="fa fa-envelope"></i></a>
+                        <p> yubrajkhadka@kcc.edu.np</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

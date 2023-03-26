@@ -1,0 +1,17 @@
+{% include 'dashboard/base.html'%}
+<br>
+<div class="container">
+  {%if messages%} {% for message in messages %}
+  <div class="alert alert-sucess">{{message}}</div>
+  {% endfor %} {% endif %}
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <h1>Update Product: {{ product.name }}</h1><br>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>

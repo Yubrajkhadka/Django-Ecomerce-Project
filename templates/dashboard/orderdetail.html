@@ -1,0 +1,105 @@
+{% include 'dashboard/base.html'%} {% load cart_tag %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container">
+    {%if messages%} {% for message in messages %}
+    <div class="alert alert-sucess"style="background-color: #ffc107; color:#000000;">{{message}}</div>
+    {% endfor %} {% endif %}
+    <div class="row">
+        <div class="col-lg-6 vh-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="text-align: center;">Order Details</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-5 col-xs-6 title ">First Name:</div>
+                    <div class="col-sm-7 col-xs-6 ">{{order.firstname}}</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+
+                    <div class="col-sm-5 col-xs-6 title ">Last Name:</div>
+                    <div class="col-sm-7">{{order.lastname}}</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    {% if order %}
+                    <div class="col-sm-5 col-xs-6 title "> Shipping Address:</div>
+                    <div class="col-sm-7">{{order.address}}</div>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    {% if order %}
+                    <div class="col-sm-5 col-xs-6 title ">Contact Number</div>
+                    <div class="col-sm-7">{{order.phone}}</div>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+
+                    <div class="col-sm-5 col-xs-6 title ">Email:</div>
+                    <div class="col-sm-7">{{order.email}}</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+
+                    <div class="col-sm-5 col-xs-6 title ">Date of Order:</div>
+                    <div class="col-sm-7">{{order.date}}</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+
+                    <div class="col-sm-5 col-xs-6 title ">Order Status:</div>
+                    <div class="col-sm-7">{{order.order_status}}</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+
+                    <div class="col-sm-5 col-xs-6 title ">Payment Method:</div>
+                    <div class="col-sm-7">{{order.payment_method}}</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 vh-100">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 style="text-align:center">All Product list</h3>
+                </div><br>
+
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Confirm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in orderitem%}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><p class="fw-bold mb-1">{{item.product}}</p></td>
+                           <td> <span class="badge badge-success rounded-pill d-inline">{{item.quantity}}</span></td>
+                            <td>{{item.price}}</td>
+                            <td>
+                                <form action="{% url 'adminupdatestatus' order.id %}" method="POST">
+                                            {% csrf_token %}
+                                <select name="status">
+                                {% for i, j in allstatus %}
+                                <option value="{{i}}" {% if i == order.order_status %}selected{% endif %}>{{j}}</option>
+                                {% endfor %}
+                              </select>
+                                <button type="submit" class="btn btn-info">Change</button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

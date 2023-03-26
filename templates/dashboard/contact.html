@@ -1,0 +1,54 @@
+{% include 'dashboard/base.html'%}
+<br>
+<div class="container">
+    {%if messages%} {% for message in messages %}
+    <div class="alert alert-sucess"style="background-color: #ffc107; color:#000000;">{{message}}</div>
+    {% endfor %} {% endif %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style = "text-align:center;">Received Messages</h3><br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Name </th>
+                        <th>Email</th>
+                        <th>Number</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in message %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{msg.name}}</td>
+                        <td>{{msg.email}}</td>
+                        <td>{{msg.number}}</td>
+                        <td>{{msg.subject}}</td>
+                        <td>{{msg.message}}</td>
+                         <td>
+                            <a href="{% url 'messagedelete' msg.id %} "type="button" onclick="return confirm('are you sure?')"><i class="fa fa-trash  px-3" aria-hidden="true"></i> </a> 
+                        </td>  
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination ">
+            {% if message.has_next %}
+             <div class="text-center">
+               <a href="?page={{ message.next_page_number }}" class="btn btn-primary d-flex justify-content-around mr-2">Show More</a>
+             </div>
+           {% endif %} 
+           {% if message.has_previous %}
+               <div class="text-center ">
+                <a href="?page={{ message.previous_page_number }}" class="btn btn-primary d-flex justify-content-around ml-5 ">Previous</a>
+               </div>
+          {% endif %}
+        </div>
+    </div>
+</div>

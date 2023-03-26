@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% load wishlist_tags %}
+
+{% block htmltitle %}{% trans 'Wishlist' %}{% endblock %}
+{% block title %}{% trans 'Wishlist' %}{% endblock %}
+
+{% block content %}
+<ul>
+    {% for wishlist_item in object_list %}
+        <li>
+            <a href="{{ wishlist_item.get_absolute_url }}">{{ wishlist_item }}</a>
+            {% wishlist_remove_form wishlist_item.item %}
+        </li>
+    {% endfor %}
+</ul>
+
+<nav>
+    <p><a href="{% url 'wishlist_add' %}">{% trans 'Add item to wishlist' %}</a></p>
+    <p><a href="{% url 'wishlist_clear' %}">{% trans 'Clear wishlist' %}</a></p>
+</nav>
+{% endblock content %}

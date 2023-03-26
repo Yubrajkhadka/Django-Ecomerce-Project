@@ -1,0 +1,61 @@
+{% include 'dashboard/base.html'%}
+<div class="container">
+    {%if messages%} {% for message in messages %}
+    <div class="alert alert-sucess"style="background-color: #ffc107; color:#000000;">{{message}}</div>
+    {% endfor %} {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style = "text-align:center">All Orders</h3><br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Customer</th>
+                        <th>Ordered On</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Order Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in order %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{order.firstname}}</td>
+                        <td>{{order.date}}</td>
+                        <td>Rs: {{order.amount }}</td>
+                        <td>{{order.payment_method}}</td>
+                        <td>   
+                            {% if order.order_status == 'Order Received' %}
+                            <div class="btn btn-primary">{{order.order_status}}</div>
+                            {% elif order.order_status == 'Order Processing' %}
+                            <div class="btn btn-warning">{{order.order_status}}</div>
+                            {% elif order.order_status == 'On the way' %}
+                            <div class="btn btn-info">{{order.order_status}}</div>
+                            {% elif order.order_status == 'Order Completed' %}
+                            <div class="btn btn-success">{{order.order_status}}</div>
+                            {% elif order.order_status == 'Order Cancelled' %}
+                            <div class="btn btn-danger">{{order.order_status}}</div>
+                            {% endif %}
+                        </td>
+                        <td><a href=" {% url 'delete_order' order.id %}"type="button" onclick="return confirm('are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i> </a> </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination ">
+         {% if order.has_next %}
+          <div class="text-center">
+            <a href="?page={{ order.next_page_number }}" class="btn btn-primary d-flex justify-content-around mr-2">Show More</a>
+          </div>
+        {% endif %} 
+        {% if order.has_previous %}
+            <div class="text-center ">
+             <a href="?page={{ order.previous_page_number }}" class="btn btn-primary d-flex justify-content-around ml-5 ">Previous</a>
+            </div>
+       {% endif %}
+    </div>
+</div>

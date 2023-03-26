@@ -1,0 +1,14 @@
+{% include 'dashboard/base.html'%}
+<br>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <h1>Add a Category</h1><br>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>

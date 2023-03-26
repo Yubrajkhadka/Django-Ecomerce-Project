@@ -1,0 +1,56 @@
+{% include 'dashboard/base.html'%}
+<br>
+<div class="container"> 
+    {%if messages%} {% for message in messages %}
+    <div class="alert alert-sucess"style="background-color: #ffc107; color:#000000;">{{message}}</div>
+    {% endfor %} {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style = "text-align:center">All Product list</h3><br>
+           <div>
+            <a href="{% url 'addproduct'%}" class="btn btn-primary ">Add New Product</a>
+           </div><br>
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in product %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{p.id}}</td>
+                        <td>{{p.name}}</td>
+                        <td>{{p.category}}</td>
+                        <td><img src="{{p.image.url}}" style="height: 60px; width:60px;" alt=""></td>
+                        <td>Rs: {{p.price}}</td>
+                        <td>{{p.stock}}</td>
+                        <td><a href="{% url 'update_product' p.id %}"><i class="fa fa-edit"></i></a>
+                            <a href="{% url 'delete_product' p.id %}" type="button" onclick="return confirm('are you sure?')"><i class="fa fa-trash px-3" aria-hidden="true"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination ">
+            {% if product.has_next %}
+             <div class="text-center">
+               <a href="?page={{ product.next_page_number }}" class="btn btn-primary d-flex justify-content-around mr-2">Show More</a>
+             </div>
+           {% endif %} 
+           {% if product.has_previous %}
+               <div class="text-center ">
+                <a href="?page={{ product.previous_page_number }}" class="btn btn-primary d-flex justify-content-around ml-5 ">Previous</a>
+               </div>
+          {% endif %}
+        </div>
+    </div>
+</div>
